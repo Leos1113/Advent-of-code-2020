@@ -31,17 +31,23 @@ fn content_lines_to_integer(content: String) -> Vec<i32> {
     return numbers;
 }
 
-fn multiply_the_three_numbers_that_sum_2020(numbers: Vec<i32>) -> i32 {
-    let mut result = 0;
-    for i in 0..numbers.len() - 2 {
-        for j in i+1..numbers.len() - 1 {
-            for k in j+1..numbers.len() {
-                if numbers[i] + numbers[j] +  numbers[k] == 2020 {
-                    result =numbers[i] * numbers[j] * numbers[k];
-                }
-            }
-        }
-    }
+fn multiply_the_three_numbers_that_sum_2020(mut numbers: Vec<i32>) -> i32 {
+    let mut index = 0;
+    let mut first = numbers[index];
+    let mut second = numbers[index +1];
 
-    return result;
+    return loop {
+        let little_plus_bigger = first + second;
+
+        let number_needed = 2020 - little_plus_bigger;
+        if numbers.iter().any(|&i| i == number_needed) && number_needed > 0 {
+            break first  * second * number_needed;
+        } else if first + second > 2020 {
+            numbers.pop();
+            second = numbers[index + 1];
+        }
+
+        index += 1;
+        first = numbers[index];
+    };
 }
