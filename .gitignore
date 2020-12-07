@@ -30,3 +30,5 @@ tags
 
 #MacOS
 .Ds_store
+
+*/.idea/
